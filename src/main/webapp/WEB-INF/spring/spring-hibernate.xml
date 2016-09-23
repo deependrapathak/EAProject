@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+     http://www.springframework.org/schema/aop 
+     http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-4.2.xsd
+     http://www.springframework.org/schema/data/jpa
+     http://www.springframework.org/schema/data/jpa/spring-jpa-4.2.xsd">
+<!--      <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+     	<property name="sessionFactory" 	
+     </bean> -->
+     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+     	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/carrental?createDatabaseIfNotExist=true" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+     </bean>
+     <bean id="hibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+     	
+     	<property name="properties">
+     		<props>
+     			<prop key="hibernate.hbm2ddl.auto">create</prop>
+     			<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+     			<prop key="connection.pool.size">1</prop>
+     			<prop key="hibernate.show_sql">false</prop>
+     			<prop key="hibernate.current_session_context_class">thread</prop>
+     		</props>
+     	</property>
+     </bean>
+     <bean  id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+     	<property name="dataSource" ref="dataSource" ></property>
+     	<property name="hibernateProperties" ref="hibernateProperties"></property>
+     	
+     	<property name="annotatedClasses">
+     		<list>
+     			<value>mum.cs544.project.domain.Address</value>
+     			<value>mum.cs544.project.domain.Car</value>
+     			<value>mum.cs544.project.domain.CarHistory</value>
+     			<value>mum.cs544.project.domain.CarType</value>
+      			<value>mum.cs544.project.domain.Comment</value>
+     			<value>mum.cs544.project.domain.Pickup</value>
+   			    <value>mum.cs544.project.domain.Rate</value>
+      			<value>mum.cs544.project.domain.ReportType</value> 
+     			<value>mum.cs544.project.domain.Reservation</value>
+      			<value>mum.cs544.project.domain.ReturnCar</value>
+     			<value>mum.cs544.project.domain.Role</value>
+     			<value>mum.cs544.project.domain.User</value>
+      			<value>mum.cs544.project.domain.Branch</value>    			
+     		</list>
+     	</property>
+     </bean>
+     <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+      	<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	 
+</beans>
